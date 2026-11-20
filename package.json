@@ -1,0 +1,28 @@
+{
+  "name": "markov-clima",
+  "version": "1.0.0",
+  "description": "Weather predictions with Markov chains (Vite + TypeScript + Chart.js)",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
+    "spec:validate": "openspec validate --all"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@fission-ai/openspec": "^2.1.1",
+    "@vitest/coverage-v8": "^5.1.1",
+    "jsdom": "^31.0.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8",
+    "vitest": "^5.1.1"
+  },
+  "dependencies": {
+    "chart.js": "^4.6.1"
+  },
+  "private": true
+}
