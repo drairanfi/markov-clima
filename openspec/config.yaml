@@ -1,0 +1,14 @@
+schema: spec-driven
+
+context: |
+  Academic project: web app that predicts future states with Markov chains.
+  Stack: Vite + TypeScript (vanilla) + Chart.js, tests with Vitest.
+  Domain: weather (Sunny, Cloudy, Rainy). UI copy is in English.
+  The math core (src/markov) must stay pure: no DOM, no Chart.js imports.
+
+rules:
+  specs:
+    - Every requirement uses SHALL and has at least one scenario.
+    - Numeric scenarios state the tolerance (1e-9 unless noted).
+  tasks:
+    - Each task maps to a requirement and names its test file.
