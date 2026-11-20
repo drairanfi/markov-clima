@@ -2,7 +2,7 @@
 
 ## Purpose
 
-TBD - created by archiving change markov-weather-predictor. Update Purpose after archive.
+Web UI that lets users pick the initial state, edit the transition matrix and see predictions for 1, 3, 5 and 10 steps as a table and charts.
 
 ## Requirements
 

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-TBD - created by archiving change markov-weather-predictor. Update Purpose after archive.
+Pure Markov chain engine: validates transition matrices and computes one-step, n-step and long-run (stationary) distributions.
 
 ## Requirements
 
