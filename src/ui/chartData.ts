@@ -42,11 +42,20 @@ export function barChartData(chain: MarkovChain, initial: Distribution): BarData
 export function lineChartData(chain: MarkovChain, initial: Distribution, maxSteps = 10): LineData {
   const labels = Array.from({ length: maxSteps + 1 }, (_, k) => k);
   const byStep = labels.map((k) => pct(distributionAfter(chain, initial, k)));
-  const st = stationary(chain);
+  const st = stationary(chain, initial);
   return {
     labels,
     datasets: chain.states.map((label, i) => ({ label, data: byStep.map((d) => d[i]) })),
     stationary: pct(st.distribution),
     converged: st.converged,
   };
+}
+
+/** Dashed horizontal "long run" series; empty when the chain did not converge. */
+export function stationaryDatasets(l: LineData): Series[] {
+  if (!l.converged) return [];
+  return l.datasets.map((s, i) => ({
+    label: `Long run: ${s.label}`,
+    data: l.labels.map(() => l.stationary[i]),
+  }));
 }

@@ -103,10 +103,10 @@ export function mountApp(root: HTMLElement, charts?: ChartsPort | ((bar: HTMLCan
       )
       .join('');
 
-    const st = stationary(chain);
+    const st = stationary(chain, initial);
     stationaryEl.textContent = st.converged
       ? `Long-run distribution: ${chain.states.map((s, i) => `${s} ${formatPercent(st.distribution[i])}`).join(', ')}.`
-      : 'This chain does not converge to a single long-run distribution (it is periodic).';
+      : 'The long-run distribution did not converge (periodic chain or very slow mixing).';
 
     port?.update(barChartData(chain, initial), lineChartData(chain, initial));
   }

@@ -1,5 +1,5 @@
 import { Chart, BarController, LineController, BarElement, LineElement, PointElement, CategoryScale, LinearScale, Legend, Tooltip } from 'chart.js';
-import type { BarData, LineData } from './chartData';
+import { stationaryDatasets, type BarData, type LineData } from './chartData';
 import type { ChartsPort } from './app';
 
 Chart.register(BarController, LineController, BarElement, LineElement, PointElement, CategoryScale, LinearScale, Legend, Tooltip);
@@ -24,16 +24,13 @@ export function createCharts(barCanvas: HTMLCanvasElement, lineCanvas: HTMLCanva
         },
         options: { responsive: true, scales: { y: yScale }, plugins: { title: { display: false } } },
       });
-      const stationaryLines = l.converged
-        ? l.datasets.map((s, i) => ({
-            label: `Long run: ${s.label}`,
-            data: l.labels.map(() => l.stationary[i]),
-            borderColor: COLORS[i % COLORS.length],
-            borderDash: [6, 4],
-            borderWidth: 1,
-            pointRadius: 0,
-          }))
-        : [];
+      const stationaryLines = stationaryDatasets(l).map((s, i) => ({
+        ...s,
+        borderColor: COLORS[i % COLORS.length],
+        borderDash: [6, 4],
+        borderWidth: 1,
+        pointRadius: 0,
+      }));
       line = new Chart(lineCanvas, {
         type: 'line',
         data: {

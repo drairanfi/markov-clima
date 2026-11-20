@@ -95,3 +95,28 @@ describe('stationary distribution', () => {
     expect($('#stationary').textContent).toMatch(/Sunny/);
   });
 });
+
+describe('edge cases', () => {
+  it('changing the state while invalid keeps results cleared, then recomputes after the fix', () => {
+    type(cell(0, 0), '0.9');
+    const sel = $<HTMLSelectElement>('#initial-state');
+    sel.value = '1';
+    sel.dispatchEvent(new Event('change', { bubbles: true }));
+    expect(root.querySelectorAll('#results tbody tr')).toHaveLength(0);
+    type(cell(0, 0), '0.7');
+    const first = root.querySelector('#results tbody tr')!;
+    expect(first.querySelectorAll('td.prob')[1].textContent).toBe('40.00%');
+  });
+  it('rejects a cell of 1.5 and one of -0.1', () => {
+    type(cell(0, 0), '1.5');
+    expect($('#errors').textContent).toMatch(/cell \(1, 1\)/i);
+    type(cell(0, 0), '-0.1');
+    expect($('#errors').textContent).toMatch(/cell \(1, 1\)/i);
+  });
+  it('accepts a row summing to 1 within tolerance (0.333/0.333/0.334)', () => {
+    type(cell(0, 0), '0.333');
+    type(cell(0, 1), '0.333');
+    type(cell(0, 2), '0.334');
+    expect($('#errors').textContent).toBe('');
+  });
+});

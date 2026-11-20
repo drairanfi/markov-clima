@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { barChartData, lineChartData, predictionRows, formatPercent } from '../src/ui/chartData';
+import { stationaryDatasets, barChartData, lineChartData, predictionRows, formatPercent } from '../src/ui/chartData';
 import { weatherChain } from '../src/markov/weather';
 
 describe('predictionRows', () => {
@@ -44,5 +44,24 @@ describe('formatPercent', () => {
   it('formats with 2 decimals', () => {
     expect(formatPercent(0.268)).toBe('26.80%');
     expect(formatPercent(1)).toBe('100.00%');
+  });
+});
+
+describe('stationaryDatasets', () => {
+  it('returns one dashed-series per state when converged', () => {
+    const sets = stationaryDatasets(lineChartData(weatherChain, [1, 0, 0]));
+    expect(sets).toHaveLength(3);
+    expect(sets[0].data).toHaveLength(11);
+    expect(sets[0].label).toBe('Long run: Sunny');
+  });
+  it('is empty when not converged', () => {
+    const cycle = { states: ['A', 'B', 'C'], matrix: [[0, 1, 0], [0, 0, 1], [1, 0, 0]] };
+    const l = lineChartData(cycle, [1, 0, 0]);
+    expect(l.converged).toBe(false);
+    expect(stationaryDatasets(l)).toEqual([]);
+  });
+  it('depends on the initial state for a reducible chain (identity)', () => {
+    const id = { states: ['A', 'B', 'C'], matrix: [[1, 0, 0], [0, 1, 0], [0, 0, 1]] };
+    expect(lineChartData(id, [0, 1, 0]).stationary[1]).toBeCloseTo(100, 6);
   });
 });

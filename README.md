@@ -74,7 +74,7 @@ OpenSpec is a dev dependency, run it with `npx openspec ...` (e.g. `npx openspec
 
 ## Tests
 
-43+ automated tests with Vitest + jsdom:
+49 automated tests with Vitest + jsdom:
 
 - `tests/markov.test.ts`: validation, one step, n-step (hand-computed value), iteration vs matrix
   power, invalid input, stationary distribution (regular and periodic chains).
