@@ -6,7 +6,7 @@ Chart.register(BarController, LineController, BarElement, LineElement, PointElem
 
 const COLORS = ['#f59e0b', '#64748b', '#2563eb', '#10b981', '#ec4899', '#8b5cf6'];
 
-const yScale = { min: 0, max: 100, title: { display: true, text: 'Probability (%)' } };
+const yScale = { min: 0, max: 100, title: { display: true, text: 'Probabilidad (%)' } };
 
 export function createCharts(barCanvas: HTMLCanvasElement, lineCanvas: HTMLCanvasElement): ChartsPort {
   let bar: Chart | undefined;
@@ -48,7 +48,7 @@ export function createCharts(barCanvas: HTMLCanvasElement, lineCanvas: HTMLCanva
         },
         options: {
           responsive: true,
-          scales: { y: yScale, x: { title: { display: true, text: 'Steps (days)' } } },
+          scales: { y: yScale, x: { title: { display: true, text: 'Pasos (días)' } } },
         },
       });
     },

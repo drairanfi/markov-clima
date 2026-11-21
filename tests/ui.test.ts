@@ -52,7 +52,7 @@ describe('initial render', () => {
 });
 
 describe('initial state selection', () => {
-  it('Rainy gives 50% Rainy after one step', () => {
+  it('Lluvioso gives 50% Lluvioso after one step', () => {
     const sel = $<HTMLSelectElement>('#initial-state');
     sel.value = '2';
     sel.dispatchEvent(new Event('change', { bubbles: true }));
@@ -65,7 +65,7 @@ describe('initial state selection', () => {
 describe('matrix editing', () => {
   it('invalid row shows an error, flags the row sum and clears results', () => {
     type(cell(0, 0), '0.9');
-    expect($('#errors').textContent).toMatch(/row 1/i);
+    expect($('#errors').textContent).toMatch(/fila 1/i);
     expect($('[data-sum="0"]').classList.contains('bad')).toBe(true);
     expect(root.querySelectorAll('#results tbody tr')).toHaveLength(0);
     expect(cleared).toBeGreaterThan(0);
@@ -92,7 +92,7 @@ describe('matrix editing', () => {
 
 describe('stationary distribution', () => {
   it('is displayed when valid', () => {
-    expect($('#stationary').textContent).toMatch(/Sunny/);
+    expect($('#stationary').textContent).toMatch(/Soleado/);
   });
 });
 
@@ -109,9 +109,9 @@ describe('edge cases', () => {
   });
   it('rejects a cell of 1.5 and one of -0.1', () => {
     type(cell(0, 0), '1.5');
-    expect($('#errors').textContent).toMatch(/cell \(1, 1\)/i);
+    expect($('#errors').textContent).toMatch(/celda \(1, 1\)/i);
     type(cell(0, 0), '-0.1');
-    expect($('#errors').textContent).toMatch(/cell \(1, 1\)/i);
+    expect($('#errors').textContent).toMatch(/celda \(1, 1\)/i);
   });
   it('accepts a row summing to 1 within tolerance (0.333/0.333/0.334)', () => {
     type(cell(0, 0), '0.333');

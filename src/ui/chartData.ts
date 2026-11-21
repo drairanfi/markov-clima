@@ -33,7 +33,7 @@ export function formatPercent(p: number): string {
 export function barChartData(chain: MarkovChain, initial: Distribution): BarData {
   const rows = predictionRows(chain, initial);
   return {
-    labels: rows.map((r) => `${r.steps} ${r.steps === 1 ? 'step' : 'steps'}`),
+    labels: rows.map((r) => `${r.steps} ${r.steps === 1 ? 'paso' : 'pasos'}`),
     datasets: chain.states.map((label, i) => ({ label, data: rows.map((r) => r.distribution[i] * 100) })),
   };
 }
@@ -55,7 +55,7 @@ export function lineChartData(chain: MarkovChain, initial: Distribution, maxStep
 export function stationaryDatasets(l: LineData): Series[] {
   if (!l.converged) return [];
   return l.datasets.map((s, i) => ({
-    label: `Long run: ${s.label}`,
+    label: `Largo plazo: ${s.label}`,
     data: l.labels.map(() => l.stationary[i]),
   }));
 }

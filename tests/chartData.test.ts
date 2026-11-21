@@ -17,8 +17,8 @@ describe('predictionRows', () => {
 describe('barChartData', () => {
   it('has a label per horizon and a dataset per state (percentages)', () => {
     const d = barChartData(weatherChain, [1, 0, 0]);
-    expect(d.labels).toEqual(['1 step', '3 steps', '5 steps', '10 steps']);
-    expect(d.datasets.map((s) => s.label)).toEqual(['Sunny', 'Cloudy', 'Rainy']);
+    expect(d.labels).toEqual(['1 paso', '3 pasos', '5 pasos', '10 pasos']);
+    expect(d.datasets.map((s) => s.label)).toEqual(['Soleado', 'Nublado', 'Lluvioso']);
     expect(d.datasets[0].data[0]).toBeCloseTo(70, 9); // Sunny after 1 step
     expect(d.datasets[0].data[1]).toBeCloseTo(51, 9); // Sunny after 3 steps
   });
@@ -52,7 +52,7 @@ describe('stationaryDatasets', () => {
     const sets = stationaryDatasets(lineChartData(weatherChain, [1, 0, 0]));
     expect(sets).toHaveLength(3);
     expect(sets[0].data).toHaveLength(11);
-    expect(sets[0].label).toBe('Long run: Sunny');
+    expect(sets[0].label).toBe('Largo plazo: Soleado');
   });
   it('is empty when not converged', () => {
     const cycle = { states: ['A', 'B', 'C'], matrix: [[0, 1, 0], [0, 0, 1], [1, 0, 0]] };

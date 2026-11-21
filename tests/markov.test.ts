@@ -25,12 +25,12 @@ describe('validateChain', () => {
     };
     const errors = validateChain(bad);
     expect(errors).toHaveLength(1);
-    expect(errors[0]).toMatch(/row 1/i);
+    expect(errors[0]).toMatch(/fila 1/i);
   });
 
   it('rejects fewer than 3 states', () => {
     const two: MarkovChain = { states: ['A', 'B'], matrix: [[0.5, 0.5], [0.5, 0.5]] };
-    expect(validateChain(two).join(' ')).toMatch(/minimum 3 states/i);
+    expect(validateChain(two).join(' ')).toMatch(/al menos 3 estados/i);
   });
 
   it('rejects entries outside [0, 1] and names the cell', () => {
@@ -39,13 +39,13 @@ describe('validateChain', () => {
       matrix: [[1.2, -0.2, 0], [0.3, 0.4, 0.3], [0.2, 0.3, 0.5]],
     };
     const errors = validateChain(bad).join(' ');
-    expect(errors).toMatch(/cell \(1, 1\)/i);
-    expect(errors).toMatch(/cell \(1, 2\)/i);
+    expect(errors).toMatch(/celda \(1, 1\)/i);
+    expect(errors).toMatch(/celda \(1, 2\)/i);
   });
 
   it('rejects a non-square matrix', () => {
     const bad: MarkovChain = { states: ['A', 'B', 'C'], matrix: [[1, 0, 0], [0, 1, 0]] };
-    expect(validateChain(bad).join(' ')).toMatch(/square/i);
+    expect(validateChain(bad).join(' ')).toMatch(/cuadrada/i);
   });
 
   it('rejects NaN entries', () => {
@@ -66,7 +66,7 @@ describe('validateChain', () => {
 });
 
 describe('step', () => {
-  it('starting Sunny equals the first matrix row', () => {
+  it('starting Soleado equals the first matrix row', () => {
     const next = step([1, 0, 0], weatherChain.matrix);
     [0.7, 0.2, 0.1].forEach((x, i) => expect(next[i]).toBeCloseTo(x, TOL));
   });
@@ -79,7 +79,7 @@ describe('distributionAfter', () => {
     expect(distributionAfter(weatherChain, start, 0)).toEqual(start);
   });
 
-  it('matches the hand-computed value for n = 3 starting Sunny', () => {
+  it('matches the hand-computed value for n = 3 starting Soleado', () => {
     const d = distributionAfter(weatherChain, start, 3);
     [0.51, 0.268, 0.222].forEach((x, i) => expect(d[i]).toBeCloseTo(x, TOL));
   });

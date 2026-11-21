@@ -17,45 +17,45 @@ export function mountApp(root: HTMLElement, charts?: ChartsPort | ((bar: HTMLCan
 
   root.innerHTML = `
     <header>
-      <h1>Weather Forecast with Markov Chains</h1>
-      <p>Tomorrow's weather depends only on today's. Edit the transition matrix and see how probabilities evolve.</p>
+      <h1>Pronóstico del clima con cadenas de Markov</h1>
+      <p>El clima de mañana depende solo del de hoy. Editá la matriz de transición y mirá cómo evolucionan las probabilidades.</p>
     </header>
     <section aria-labelledby="h-setup">
-      <h2 id="h-setup">1. Today's weather</h2>
-      <label for="initial-state">Initial state</label>
+      <h2 id="h-setup">1. Clima de hoy</h2>
+      <label for="initial-state">Estado inicial</label>
       <select id="initial-state">${chain.states.map((s, i) => `<option value="${i}">${esc(s)}</option>`).join('')}</select>
     </section>
     <section aria-labelledby="h-matrix">
-      <h2 id="h-matrix">2. Transition matrix</h2>
-      <p class="hint">Row = today, column = tomorrow. Each row must sum to 1.</p>
+      <h2 id="h-matrix">2. Matriz de transición</h2>
+      <p class="hint">Fila = hoy, columna = mañana. Cada fila debe sumar 1.</p>
       <table id="matrix">
-        <thead><tr><th scope="col">From \\ To</th>${chain.states.map((s) => `<th scope="col">${esc(s)}</th>`).join('')}<th scope="col">Row sum</th></tr></thead>
+        <thead><tr><th scope="col">Desde \\ Hacia</th>${chain.states.map((s) => `<th scope="col">${esc(s)}</th>`).join('')}<th scope="col">Suma de fila</th></tr></thead>
         <tbody>${chain.states
           .map(
             (from, i) => `<tr><th scope="row">${esc(from)}</th>${chain.states
               .map(
-                (to, j) => `<td><input type="number" step="0.01" min="0" max="1" data-row="${i}" data-col="${j}" aria-label="Probability from ${esc(from)} to ${esc(to)}" /></td>`,
+                (to, j) => `<td><input type="number" step="0.01" min="0" max="1" data-row="${i}" data-col="${j}" aria-label="Probabilidad de ${esc(from)} a ${esc(to)}" /></td>`,
               )
               .join('')}<td data-sum="${i}" class="sum"></td></tr>`,
           )
           .join('')}</tbody>
       </table>
-      <button id="reset" type="button">Reset matrix</button>
+      <button id="reset" type="button">Restablecer matriz</button>
       <div id="errors" role="alert"></div>
     </section>
     <section aria-labelledby="h-results">
-      <h2 id="h-results">3. Predictions</h2>
+      <h2 id="h-results">3. Predicciones</h2>
       <table id="results">
-        <thead><tr><th scope="col">Steps</th>${chain.states.map((s) => `<th scope="col">${esc(s)}</th>`).join('')}</tr></thead>
+        <thead><tr><th scope="col">Pasos</th>${chain.states.map((s) => `<th scope="col">${esc(s)}</th>`).join('')}</tr></thead>
         <tbody></tbody>
       </table>
       <p id="stationary"></p>
     </section>
     <section aria-labelledby="h-charts">
-      <h2 id="h-charts">4. Charts</h2>
+      <h2 id="h-charts">4. Gráficos</h2>
       <div class="charts">
-        <figure><canvas id="bar-chart" role="img" aria-label="Bar chart of probabilities after 1, 3, 5 and 10 steps"></canvas></figure>
-        <figure><canvas id="line-chart" role="img" aria-label="Line chart of probabilities from step 0 to 10"></canvas></figure>
+        <figure><canvas id="bar-chart" role="img" aria-label="Gráfico de barras de probabilidades tras 1, 3, 5 y 10 pasos"></canvas></figure>
+        <figure><canvas id="line-chart" role="img" aria-label="Gráfico de líneas de probabilidades del paso 0 al 10"></canvas></figure>
       </div>
     </section>`;
 
@@ -105,8 +105,8 @@ export function mountApp(root: HTMLElement, charts?: ChartsPort | ((bar: HTMLCan
 
     const st = stationary(chain, initial);
     stationaryEl.textContent = st.converged
-      ? `Long-run distribution: ${chain.states.map((s, i) => `${s} ${formatPercent(st.distribution[i])}`).join(', ')}.`
-      : 'The long-run distribution did not converge (periodic chain or very slow mixing).';
+      ? `Distribución de largo plazo: ${chain.states.map((s, i) => `${s} ${formatPercent(st.distribution[i])}`).join(', ')}.`
+      : 'La distribución de largo plazo no convergió (cadena periódica o mezcla muy lenta).';
 
     port?.update(barChartData(chain, initial), lineChartData(chain, initial));
   }

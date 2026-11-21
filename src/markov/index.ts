@@ -16,9 +16,9 @@ export function validateChain(chain: MarkovChain): string[] {
   const errors: string[] = [];
   const n = chain.states.length;
 
-  if (n < 3) errors.push(`Minimum 3 states required (got ${n}).`);
+  if (n < 3) errors.push(`Se requieren al menos 3 estados (hay ${n}).`);
   if (chain.matrix.length !== n || chain.matrix.some((r) => r.length !== n)) {
-    errors.push(`Matrix must be square with size ${n}.`);
+    errors.push(`La matriz debe ser cuadrada de tamaño ${n}.`);
     return errors;
   }
 
@@ -27,13 +27,13 @@ export function validateChain(chain: MarkovChain): string[] {
     row.forEach((p, j) => {
       if (!Number.isFinite(p) || p < 0 || p > 1) {
         valid = false;
-        errors.push(`Cell (${i + 1}, ${j + 1}) must be a number between 0 and 1.`);
+        errors.push(`La celda (${i + 1}, ${j + 1}) debe ser un número entre 0 y 1.`);
       }
     });
     if (valid) {
       const total = row.reduce((a, b) => a + b, 0);
       if (Math.abs(total - 1) > ROW_SUM_TOLERANCE) {
-        errors.push(`Row ${i + 1} (${chain.states[i]}) sums to ${total.toFixed(4)}, expected 1.`);
+        errors.push(`La fila ${i + 1} (${chain.states[i]}) suma ${total.toFixed(4)}, debe sumar 1.`);
       }
     }
   });
